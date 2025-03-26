@@ -2,6 +2,11 @@ export type loginDTO = {
     email: string,
     password: string
 }
+export type RegisterDTO = {
+    name: string,
+    email: string,
+    password: string
+}
 export type TFile = {
     "name": string,
     "filetype": string,

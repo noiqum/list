@@ -2,11 +2,13 @@
 
 import { useForm } from '@mantine/form';
 import { zodResolver } from 'mantine-form-zod-resolver';
-import { z } from 'zod';
+import { any, z } from 'zod';
 import {
     Anchor,
     Button,
     Container,
+    Divider,
+    Group,
     Paper,
     PasswordInput,
     Text,
@@ -14,34 +16,68 @@ import {
     Title,
 } from '@mantine/core';
 import classes from "./AuthForm.module.css"
-import { loginDTO } from '@/types';
+import { loginDTO, RegisterDTO } from '@/types';
 
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
+import { useState } from 'react';
 
 interface AuthFormProps {
     formType: "login" | "register"
 }
 
 function AuthForm({ formType }: AuthFormProps) {
+    const [serviceError, setServiceError] = useState<string | null>(null)
     const handleSubmit = async (values: typeof form.values) => {
+        // login flow
         if (formType === "login") {
             const dto: loginDTO = {
                 email: values.email,
                 password: values.password
             }
+            try {
+                const response = await fetch(`https://list-api-7mn9.onrender.com/api/auth/login`, {
+                    method: "POST",
+                    body: JSON.stringify(dto),
+                    credentials: "include",
+                    headers: {
+                        "Content-type": "application/json"
+                    }
 
-            const response = await fetch(`https://list-api-7mn9.onrender.com/api/auth/login`, {
-                method: "POST",
-                body: JSON.stringify(dto),
-                credentials: "include",
-                headers: {
-                    "Content-type": "application/json"
+                }).then(res => res.json())
+                if (response.status === "success") {
+                    redirect("/todos")
+                } else {
+                    setServiceError(response.message || "Something went wrong, please try later.")
                 }
+            } catch (error) {
+                setServiceError("Something went wrong, please try later.")
+            }
 
-            }).then(res => res.json())
-            if (response.status === "success") {
-                redirect("/todos")
+        } else {
+            //register flow
+            const dto: RegisterDTO = {
+                name: values.name as string,
+                email: values.email,
+                password: values.password
+            }
+            try {
+                const response = await fetch(`https://list-api-7mn9.onrender.com/api/auth/register`, {
+                    method: "POST",
+                    body: JSON.stringify(dto),
+                    credentials: "include",
+                    headers: {
+                        "Content-type": "application/json"
+                    }
+
+                }).then(res => res.json())
+                if (response.status === "success") {
+                    redirect("/todos")
+                } else {
+                    setServiceError(response.message || "Something went wrong, please try later.")
+                }
+            } catch (error) {
+                setServiceError("Something went wrong, please try later.")
             }
         }
     };
@@ -117,7 +153,9 @@ function AuthForm({ formType }: AuthFormProps) {
                         key={form.key("password")}
                         {...form.getInputProps("password")}
                         required mt="md" />
-
+                    {serviceError &&
+                        <Text c="red" mt="md">{serviceError}</Text>
+                    }
                     <Button type="submit" fullWidth mt="xl">
                         Sign in
                     </Button>
