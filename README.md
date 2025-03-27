@@ -1,37 +1,28 @@
-# Mantine Next.js template
+# To-Do App with ChatGPT Integration
 
-This is a template for [Next.js](https://nextjs.org/) app router + [Mantine](https://mantine.dev/).
-If you want to use pages router instead, see [next-pages-template](https://github.com/mantinedev/next-pages-template).
+This project is a To-Do application developed as a case study for the Software Engineer position . It includes core To-Do management features and integrates ChatGPT to provide AI-based recommendations for To-Do items.
 
-## Features
+## How to Run the App
 
-This template comes with the following features:
 
-- [PostCSS](https://postcss.org/) with [mantine-postcss-preset](https://mantine.dev/styles/postcss-preset)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Storybook](https://storybook.js.org/)
-- [Jest](https://jestjs.io/) setup with [React Testing Library](https://testing-library.com/docs/react-testing-library/intro)
-- ESLint setup with [eslint-config-mantine](https://github.com/mantinedev/eslint-config-mantine)
 
-## npm scripts
+# 1. Clone the repository
+git clone <your-repository-url>
+cd <your-repository-name>
 
-### Build and dev scripts
 
-- `dev` – start dev server
-- `build` – bundle application for production
-- `analyze` – analyzes application bundle with [@next/bundle-analyzer](https://www.npmjs.com/package/@next/bundle-analyzer)
+# 2. Frontend Setup
 
-### Testing scripts
+# run npm i 
+# run run dev
+REACT_APP_API_URL=http://localhost:3000 # Or your local URL
 
-- `typecheck` – checks TypeScript types
-- `lint` – runs ESLint
-- `prettier:check` – checks files with Prettier
-- `jest` – runs jest tests
-- `jest:watch` – starts jest watch
-- `test` – runs `jest`, `prettier:check`, `lint` and `typecheck` scripts
 
-### Other scripts
 
-- `storybook` – starts storybook dev server
-- `storybook:build` – build production storybook bundle to `storybook-static`
-- `prettier:write` – formats all files with Prettier
+# 3. Access the application in your browser
+
+# Create credentials via register path
+
+# 4. After succesfully logged in , app redirect to dashboard page 
+
+# 5. Create-Delete-Edit todo
