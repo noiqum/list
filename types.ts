@@ -14,9 +14,9 @@ export type TFile = {
 }
 
 export type Todo = {
-    "tags": [],
-    "image": null,
-    "file": null,
+    "tag": string,
+    "image": null | TFile,
+    "file": null | TFile,
     "id": string,
     "userId": string,
     "content": string,
@@ -27,11 +27,17 @@ export type Todo = {
 export type User = {
     id: string,
     name: string,
-    email: string
+    email: string,
+    token: string
 }
 export const baseURL = {
     "development": "https://list-api-7mn9.onrender.com/api",
     "test": "https://list-api-7mn9.onrender.com/api",
     "production": "https://list-api-7mn9.onrender.com/api"
 
+}
+
+export type getTodosByUserData = {
+    page: number,
+    limit: number,
 }
