@@ -2,13 +2,11 @@
 
 import { useForm } from '@mantine/form';
 import { zodResolver } from 'mantine-form-zod-resolver';
-import { any, z } from 'zod';
+import { z } from 'zod';
 import {
     Anchor,
     Button,
     Container,
-    Divider,
-    Group,
     Paper,
     PasswordInput,
     Text,
@@ -17,18 +15,21 @@ import {
 } from '@mantine/core';
 import classes from "./AuthForm.module.css"
 import { loginDTO, RegisterDTO } from '@/types';
-
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { useUser } from '@/contexts/userContext';
 
 interface AuthFormProps {
     formType: "login" | "register"
 }
 
 function AuthForm({ formType }: AuthFormProps) {
+    const { setStoreUser } = useUser()
+    const router = useRouter()
     const [serviceError, setServiceError] = useState<string | null>(null)
     const handleSubmit = async (values: typeof form.values) => {
+
         // login flow
         if (formType === "login") {
             const dto: loginDTO = {
@@ -45,8 +46,10 @@ function AuthForm({ formType }: AuthFormProps) {
                     }
 
                 }).then(res => res.json())
-                if (response.status === "success") {
-                    redirect("/todos")
+                if (response.status === "success" || response.statusCode === 200) {
+                    setStoreUser(response.data)
+                    router.push("/")
+
                 } else {
                     setServiceError(response.message || "Something went wrong, please try later.")
                 }
@@ -71,8 +74,11 @@ function AuthForm({ formType }: AuthFormProps) {
                     }
 
                 }).then(res => res.json())
-                if (response.status === "success") {
-                    redirect("/todos")
+
+                if (response.status === "success" || response.statusCode === 201) {
+                    setStoreUser(response.data)
+                    router.push("/")
+
                 } else {
                     setServiceError(response.message || "Something went wrong, please try later.")
                 }
@@ -115,7 +121,7 @@ function AuthForm({ formType }: AuthFormProps) {
         initialValues: handleInialValues(),
         validate: zodResolver(handlerZodSchema()),
         validateInputOnBlur: true,
-
+        onSubmitPreventDefault: "always"
     });
 
     return (
@@ -156,7 +162,7 @@ function AuthForm({ formType }: AuthFormProps) {
                     {serviceError &&
                         <Text c="red" mt="md">{serviceError}</Text>
                     }
-                    <Button type="submit" fullWidth mt="xl">
+                    <Button loading={form.submitting} type="submit" fullWidth mt="xl">
                         Sign in
                     </Button>
                 </Paper>
