@@ -110,9 +110,10 @@ function CreateForm() {
             onChange={e => setData({ ...data, tag: e.target.value })}
             my="sm"
 
-        ></TextInput>
-        <FileInput onChange={e => setImage(e)} clearable accept="image/png,image/jpeg" my="sm" label="Image"></FileInput>
-        <FileInput onChange={e => setDocument(e)} accept="application/pdf" my="sm" label="Document"></FileInput>
+        />
+        <FileInput onChange={e => setImage(e)} clearable accept="image/png,image/jpeg" my="sm" label="Image" />
+        <FileInput onChange={e => setDocument(e)} accept="application/pdf" my="sm" label="Document" />
+        {serviceError && <Text>{serviceError}</Text>}
         <Button loading={isSubmitting} onClick={submitHandler} type="submit" variant="gradient">Save</Button>
     </Container>
 

@@ -5,8 +5,7 @@ import { SearchBar } from "@/components/SearchBar/SearchBar";
 import { TodoCard } from "@/components/TodoCard/TodoCard";
 import { useUser } from "@/contexts/userContext";
 import { baseURL, Todo } from "@/types";
-import { Grid, Text } from "@mantine/core";
-import { Pagination } from '@mantine/core';
+import { Grid, Text, Pagination } from "@mantine/core";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -43,7 +42,6 @@ export default function HomePage() {
             router.push("/auth")
           }
         } catch (error) {
-          console.log(error)
           setServiceError("Could not get todos")
         }
       }
@@ -74,11 +72,9 @@ export default function HomePage() {
         const data: Todo[] = await response.json();
         setSearchResults(data);
       } else {
-        console.error('Search failed:', response.status);
         setSearchResults([]);
       }
     } catch (error) {
-      console.error('Error during search:', error);
       setSearchResults([]);
     } finally {
       setLoading(false);
@@ -87,7 +83,7 @@ export default function HomePage() {
 
   return (
     <>
-      <MegaMenu></MegaMenu>
+      <MegaMenu />
       <SearchBar
         placeholder="search todo"
         maw={700}
@@ -96,6 +92,7 @@ export default function HomePage() {
         onSearch={handleSearch}
         debounceDelay={500}
       />
+      {serviceError && <Text c="red" >{serviceError}</Text>}
       {loading && <p style={{ textAlign: 'center' }}>Searching...</p>}
       {searchResults.length > 0 && <Text size="xl"> Search Results:</Text>}
       {searchResults.length > 0 && <Grid>
@@ -110,7 +107,7 @@ export default function HomePage() {
 
         })}
       </Grid>
-      <Pagination onChange={setCurrentPage} total={totalPage} value={currentPage}></Pagination>
+      <Pagination onChange={setCurrentPage} total={totalPage} value={currentPage} />
     </>
   );
 }

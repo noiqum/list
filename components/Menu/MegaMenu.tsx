@@ -1,30 +1,19 @@
 import {
-    IconBook,
-    IconChartPie3,
-    IconChevronDown,
-    IconCode,
-    IconCoin,
-    IconFingerprint,
-    IconNotification,
     IconPlus,
 } from '@tabler/icons-react';
 import {
-    Anchor,
+
     Box,
     Burger,
     Button,
-    Center,
-    Collapse,
+
     Divider,
     Drawer,
     Group,
-    HoverCard,
+
     Modal,
     ScrollArea,
-    SimpleGrid,
     Text,
-    ThemeIcon,
-    UnstyledButton,
     useMantineTheme,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
@@ -37,7 +26,7 @@ import CreateForm from '../CreateForm/CreateForm';
 export function MegaMenu() {
     const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
     const [opened, { open, close }] = useDisclosure(false);
-    const theme = useMantineTheme();
+
 
 
 
@@ -67,19 +56,8 @@ export function MegaMenu() {
                 zIndex={1000000}
             >
                 <ScrollArea h="calc(100vh - 80px" mx="-md">
-                    <Divider my="sm" />
-
-                    <a href="#" className={classes.link}>
-                        Home
-                    </a>
-
-
-
-                    <Divider my="sm" />
-
                     <Group justify="center" grow pb="xl" px="md">
                         <Button variant="default">Log Out</Button>
-
                     </Group>
                 </ScrollArea>
             </Drawer>

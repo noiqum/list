@@ -94,13 +94,13 @@ function AuthForm({ formType }: AuthFormProps) {
                 email: z.string().email("please enter a valid email"),
                 password: z.string().min(8, "password must be at least 8 letters")
             })
-        } else {
-            return z.object({
-                name: z.string().min(3, "name should be 3 letters long at least"),
-                email: z.string().email("please enter a valid email"),
-                password: z.string().min(8, "password must be at least 8 letters")
-            })
         }
+        return z.object({
+            name: z.string().min(3, "name should be 3 letters long at least"),
+            email: z.string().email("please enter a valid email"),
+            password: z.string().min(8, "password must be at least 8 letters")
+        })
+
     }
     const handleInialValues = () => {
         if (formType === "login") {
@@ -108,13 +108,13 @@ function AuthForm({ formType }: AuthFormProps) {
                 email: "",
                 password: ""
             }
-        } else {
-            return {
-                name: "",
-                email: "",
-                password: ""
-            }
         }
+        return {
+            name: "",
+            email: "",
+            password: ""
+        }
+
     }
     const form = useForm({
         mode: 'uncontrolled',

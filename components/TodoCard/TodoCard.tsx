@@ -2,7 +2,7 @@
 import { baseURL, Todo } from "@/types";
 import { ActionIcon, Badge, Button, Card, Checkbox, Group, Image, Modal, Text, TextInput, useModalsStack } from "@mantine/core";
 import { useField } from "@mantine/form";
-import { IconDownload, IconEdit, IconTrash, IconUpload } from "@tabler/icons-react";
+import { IconDownload, IconEdit, IconTrash } from "@tabler/icons-react";
 
 interface TodoCardProps {
     todo: Todo
@@ -44,7 +44,6 @@ export const TodoCard = ({ todo }: TodoCardProps) => {
             }
         } catch (error) {
             stack.open("error")
-            console.log(error)
         }
     }
     const updateHandler = async (newContent: string) => {
@@ -61,7 +60,7 @@ export const TodoCard = ({ todo }: TodoCardProps) => {
                 stack.open("success")
             }
         } catch (error) {
-
+            stack.open("error")
         }
     }
 
@@ -110,7 +109,7 @@ export const TodoCard = ({ todo }: TodoCardProps) => {
             </Modal.Stack>
             <Card withBorder padding="lg" radius="md">
                 <Group justify="space-between">
-                    <Checkbox label="Completed"></Checkbox>
+                    <Checkbox label="Completed" />
                     {(todo.tag !== undefined) ? <Badge>{todo.tag}</Badge> : <Badge>Add Tag</Badge>}
                 </Group>
                 <Text fz="lg" fw={500} mt="md">
